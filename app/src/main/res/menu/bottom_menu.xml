@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_home"
+        android:enabled="true"
+        android:icon="@drawable/baseline_person_24"
+        android:title="친구" />
+    <item
+        android:id="@+id/action_chatting"
+        android:enabled="true"
+        android:icon="@drawable/round_chat_bubble_24"
+        android:title="채팅" />
+    <item
+        android:id="@+id/action_more"
+        android:enabled="true"
+        android:icon="@drawable/baseline_more_horiz_24"
+        android:title="더보기" />
+</menu>

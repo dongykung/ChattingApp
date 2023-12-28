@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/edit"
+        android:icon="@drawable/baseline_search_24"
+        android:title="search"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/baseline_person_add_24"
+        android:title="친구추가"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="설정"
+        app:showAsAction="ifRoom" />
+
+</menu>
