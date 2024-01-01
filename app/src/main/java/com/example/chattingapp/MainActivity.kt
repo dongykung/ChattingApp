@@ -6,16 +6,18 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.chattingapp.ChatList.ChatListFragment
 import com.example.chattingapp.Login.LoginActivity
+import com.example.chattingapp.SetProfile.MyProfileView
+import com.example.chattingapp.SetProfile.seeMyProfile
 import com.example.chattingapp.UserList.UserFragment
 import com.example.chattingapp.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),seeMyProfile {
     private lateinit var binding : ActivityMainBinding
     private lateinit var auth : FirebaseAuth
-    private var userFragment = UserFragment()
+    private var userFragment = UserFragment(this)
     private var chatFragment = ChatListFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +67,11 @@ class MainActivity : AppCompatActivity() {
                 replace(R.id.mainFrame,fragment)
                 commit()
             }
+    }
+
+    override fun clickseeMyProfile() {
+        val myProfileBottomSheet = MyProfileView()
+        myProfileBottomSheet.show(supportFragmentManager, "Test")
     }
 
 }

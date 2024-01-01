@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
+import com.example.chattingapp.Key
+import com.example.chattingapp.Key.Companion.DEFAULT_PROFILEIMAGE
 import com.example.chattingapp.R
 import com.example.chattingapp.databinding.ActivitySignUpBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.database.database
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignUpBinding
@@ -39,9 +42,23 @@ class SignUpActivity : AppCompatActivity() {
             if(checkSignup()){
                 auth.createUserWithEmailAndPassword(userEmail!!,password!!)
                     .addOnCompleteListener(this){task->
-                        if(task.isSuccessful){
-                            Toast.makeText(this@SignUpActivity,R.string.signupsuccess,Toast.LENGTH_SHORT).show()
-                            finish()
+                        val currentUser = auth.currentUser
+                        if(task.isSuccessful&&currentUser!=null){
+
+                            val user = mutableMapOf<String,Any>()
+                            user["userUid"] = currentUser.uid
+                            user["userId"]=userId!!
+                            user["username"] = userName!!
+                            user["password"] = password!!
+                            user["useremail"] = userEmail!!
+                            user["userphonenumber"]=phoneNumber!!
+                            user["profileurl"]=DEFAULT_PROFILEIMAGE
+                            user["backgroundurl"]=""
+                            Firebase.database(Key.DB_URL).reference.child(Key.DB_USERS).child(currentUser.uid).updateChildren(user).addOnCompleteListener{
+                                Toast.makeText(this@SignUpActivity,R.string.signupsuccess,Toast.LENGTH_SHORT).show()
+                                finish()
+                            }.addOnFailureListener{  Toast.makeText(this@SignUpActivity,R.string.signupfail,Toast.LENGTH_SHORT).show()}
+
                         }else{
                             Toast.makeText(this@SignUpActivity,R.string.signupfail,Toast.LENGTH_SHORT).show()
                         }
