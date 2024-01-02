@@ -3,6 +3,7 @@ package com.example.chattingapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.chattingapp.ChatList.ChatListFragment
 import com.example.chattingapp.Login.LoginActivity
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity(),seeMyProfile {
 
         val currentUser = Firebase.auth.currentUser
         if(currentUser==null){
+            Log.e("로그아웃","로그아웃됨")
             val intent = Intent(this,LoginActivity::class.java)
             startActivity(intent)
             finish()
@@ -70,8 +72,12 @@ class MainActivity : AppCompatActivity(),seeMyProfile {
     }
 
     override fun clickseeMyProfile() {
-        val myProfileBottomSheet = MyProfileView()
+        val myProfileBottomSheet = MyProfileView(updatemyInfo ={userFragment.loadMyInfo()})
         myProfileBottomSheet.show(supportFragmentManager, "Test")
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
 }

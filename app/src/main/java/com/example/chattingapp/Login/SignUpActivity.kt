@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.chattingapp.Key
+import com.example.chattingapp.Key.Companion.DEFAULT_BACKGROUNDIMAGE
 import com.example.chattingapp.Key.Companion.DEFAULT_PROFILEIMAGE
 import com.example.chattingapp.R
 import com.example.chattingapp.databinding.ActivitySignUpBinding
@@ -53,7 +54,7 @@ class SignUpActivity : AppCompatActivity() {
                             user["useremail"] = userEmail!!
                             user["userphonenumber"]=phoneNumber!!
                             user["profileurl"]=DEFAULT_PROFILEIMAGE
-                            user["backgroundurl"]=""
+                            user["backgroundurl"]= DEFAULT_BACKGROUNDIMAGE
                             Firebase.database(Key.DB_URL).reference.child(Key.DB_USERS).child(currentUser.uid).updateChildren(user).addOnCompleteListener{
                                 Toast.makeText(this@SignUpActivity,R.string.signupsuccess,Toast.LENGTH_SHORT).show()
                                 finish()

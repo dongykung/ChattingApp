@@ -51,12 +51,8 @@ class UserFragment(private val listener : seeMyProfile):Fragment() {
         binding.userProfileView.setOnClickListener{
             listener.clickseeMyProfile()
         }
-        binding.userProfileImageView.load(userInfo.profileurl){
-            placeholder(R.drawable.customcircle)
-            crossfade(true)
-            transformations(RoundedCornersTransformation(5.0f))
-        }
-
+        //내 정보와 유저들 정보 리스트 얻어오기
+        loadMyInfo()
         loadUserList()
 
     }
@@ -83,5 +79,12 @@ class UserFragment(private val listener : seeMyProfile):Fragment() {
             }
 
         })
+    }
+     fun loadMyInfo(){
+        binding.userProfileImageView.load(userInfo.profileurl){
+            placeholder(R.drawable.customcircle)
+            crossfade(true)
+            transformations(RoundedCornersTransformation(15.0f))
+        }
     }
 }

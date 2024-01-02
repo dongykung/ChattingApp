@@ -17,4 +17,5 @@
     <string name="loginfail">로그인 실패</string>
     <string name="editprofile">프로필 편집</string>
     <string name="complete">완료</string>
+    <string name="statusmeesage">상태메시지+</string>
 </resources>

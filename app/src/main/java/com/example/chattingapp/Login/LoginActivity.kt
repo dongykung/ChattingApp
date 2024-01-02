@@ -1,6 +1,7 @@
 package com.example.chattingapp.Login
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -29,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         auth= Firebase.auth
         setContentView(binding.root)
-
         //회원가입 버튼 리스너
         binding.signupButton.setOnClickListener {
             val intent = Intent(this,SignUpActivity::class.java)

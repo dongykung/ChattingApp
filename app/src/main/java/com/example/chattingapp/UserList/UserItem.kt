@@ -6,7 +6,7 @@ data class UserItem(
     var userId:String?=null,
     var userUid:String?=null,
     var useremail:String?=null,
-    val username:String?=null,
-    val userphonenumber:String?=null,
-    val backgroundurl:String?=null
+    var username:String?=null,
+    var userphonenumber:String?=null,
+    var backgroundurl:String?=null
 )

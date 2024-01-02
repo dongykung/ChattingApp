@@ -5,12 +5,20 @@ import android.view.ViewGroup
 import android.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.RoundedCornersTransformation
+import com.example.chattingapp.R
 import com.example.chattingapp.databinding.ItemUserBinding
 
 class UserAdapter:androidx.recyclerview.widget.ListAdapter<UserItem,UserAdapter.UserViewHolder>(diffutil){
 
     inner class  UserViewHolder(private val binding : ItemUserBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(item:UserItem){
+            binding.userlistProfileImageView.load(item.profileurl){
+                placeholder(R.drawable.customcircle)
+                crossfade(true)
+                transformations(RoundedCornersTransformation(5.0f))
+            }
             binding.userlistname.text=item.username
 
         }
