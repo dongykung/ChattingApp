@@ -18,4 +18,8 @@
     <string name="editprofile">프로필 편집</string>
     <string name="complete">완료</string>
     <string name="statusmeesage">상태메시지+</string>
+    <string name="statusmeesagechange">상태메시지 올리기</string>
+    <string name="statusmeesagechangehint">내용 입력</string>
+    <string name="confirm">확인</string>
+
 </resources>

@@ -7,7 +7,9 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.chattingapp.ChatList.ChatListFragment
 import com.example.chattingapp.Login.LoginActivity
+import com.example.chattingapp.SetProfile.ChangeMyStatusMessage
 import com.example.chattingapp.SetProfile.MyProfileView
+import com.example.chattingapp.SetProfile.MyStatusMessage
 import com.example.chattingapp.SetProfile.seeMyProfile
 import com.example.chattingapp.UserList.UserFragment
 import com.example.chattingapp.databinding.ActivityMainBinding
@@ -15,10 +17,10 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
-class MainActivity : AppCompatActivity(),seeMyProfile {
+class MainActivity : AppCompatActivity(),seeMyProfile,ChangeMyStatusMessage {
     private lateinit var binding : ActivityMainBinding
     private lateinit var auth : FirebaseAuth
-    private var userFragment = UserFragment(this)
+    private var userFragment = UserFragment(this,this)
     private var chatFragment = ChatListFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,9 +77,14 @@ class MainActivity : AppCompatActivity(),seeMyProfile {
         val myProfileBottomSheet = MyProfileView(updatemyInfo ={userFragment.loadMyInfo()})
         myProfileBottomSheet.show(supportFragmentManager, "Test")
     }
-
+    override fun changeStatusMessage() {
+        val chagestatusmessage = MyStatusMessage(updateui = {userFragment.loadMyStatusMessage()})
+        chagestatusmessage.show(supportFragmentManager,"Test")
+    }
     override fun onResume() {
         super.onResume()
     }
+
+
 
 }

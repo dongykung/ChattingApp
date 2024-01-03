@@ -55,6 +55,7 @@ class SignUpActivity : AppCompatActivity() {
                             user["userphonenumber"]=phoneNumber!!
                             user["profileurl"]=DEFAULT_PROFILEIMAGE
                             user["backgroundurl"]= DEFAULT_BACKGROUNDIMAGE
+                            user["statusMessage"]=""
                             Firebase.database(Key.DB_URL).reference.child(Key.DB_USERS).child(currentUser.uid).updateChildren(user).addOnCompleteListener{
                                 Toast.makeText(this@SignUpActivity,R.string.signupsuccess,Toast.LENGTH_SHORT).show()
                                 finish()

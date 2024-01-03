@@ -3,6 +3,7 @@ package com.example.chattingapp.UserList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ListAdapter
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -20,7 +21,14 @@ class UserAdapter:androidx.recyclerview.widget.ListAdapter<UserItem,UserAdapter.
                 transformations(RoundedCornersTransformation(5.0f))
             }
             binding.userlistname.text=item.username
-
+            binding.userliststatusmessage.apply {
+                if(!item.statusMessage.isNullOrEmpty()){
+                    isVisible = true
+                    text = item.statusMessage
+                }else{
+                    isVisible = false
+                }
+            }
         }
     }
 
