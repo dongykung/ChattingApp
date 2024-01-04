@@ -26,7 +26,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 
-class UserFragment(private val seeProfilelistener : seeMyProfile,private val changestatus : ChangeMyStatusMessage):Fragment() {
+class UserFragment(private val seeProfilelistener : seeMyProfile,private val changestatus : ChangeMyStatusMessage,
+    private val friendview : friendProfileView):Fragment() {
     private lateinit var binding : FragmentUserlistBinding
     private lateinit var auth : FirebaseAuth
     private lateinit var userlistAdapter : UserAdapter
@@ -43,7 +44,7 @@ class UserFragment(private val seeProfilelistener : seeMyProfile,private val cha
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.e("test","Test")
-         userlistAdapter = UserAdapter()
+         userlistAdapter = UserAdapter(friendview)
         binding.userlistRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter =userlistAdapter

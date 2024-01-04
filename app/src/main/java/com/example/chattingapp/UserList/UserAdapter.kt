@@ -11,10 +11,13 @@ import coil.transform.RoundedCornersTransformation
 import com.example.chattingapp.R
 import com.example.chattingapp.databinding.ItemUserBinding
 
-class UserAdapter:androidx.recyclerview.widget.ListAdapter<UserItem,UserAdapter.UserViewHolder>(diffutil){
+class UserAdapter(private val friendview:friendProfileView):androidx.recyclerview.widget.ListAdapter<UserItem,UserAdapter.UserViewHolder>(diffutil){
 
     inner class  UserViewHolder(private val binding : ItemUserBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(item:UserItem){
+            binding.clickfriendView.setOnClickListener{
+                friendview.clickfriendProfile(item)
+            }
             binding.userlistProfileImageView.load(item.profileurl){
                 placeholder(R.drawable.customcircle)
                 crossfade(true)
