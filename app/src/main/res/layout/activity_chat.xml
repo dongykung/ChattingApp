@@ -5,8 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatList.ChatActivity">
+    >
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/chatlayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9"
+        android:background="@drawable/theme_background_image"
+        app:layout_constraintBottom_toTopOf="@id/chatedidttextlayout">
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/chattopAppBar"
         android:layout_width="0dp"
@@ -23,16 +31,17 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/chattopAppBar"
-        app:layout_constraintBottom_toTopOf="@id/chatedidttextlayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:id="@+id/chatedidttextlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chatrecyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/chatlayout"
         android:orientation="horizontal"
         android:backgroundTint="@color/white">
 
