@@ -1,7 +1,10 @@
 package com.example.chattingapp.ChatRoom
 
 data class ChatItem(
-    val chatId:String?=null,
-    val userUid:String?=null,
-    val message:String?=null
+    var chatId:String?=null,
+    var userUid:String?=null,
+    var message:String?=null,
+    var username:String?=null,
+    var userprofileurl:String?=null,
+    var time:Long?=null
 )

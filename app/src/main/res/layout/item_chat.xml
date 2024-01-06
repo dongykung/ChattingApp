@@ -58,4 +58,16 @@
         android:maxHeight="150dp"
         app:layout_constrainedWidth="true"
         tools:text="this is textddfad" />
+    <TextView
+        android:id="@+id/chatyoutime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/flow"
+        tools:text="daf"
+        android:textColor="@color/grey3"
+        app:layout_constraintTop_toTopOf="@id/flow"
+        app:layout_constraintBottom_toBottomOf="@id/flow"
+        app:layout_constraintVertical_bias="0.9"
+        android:layout_marginStart="10dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

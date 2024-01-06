@@ -8,4 +8,11 @@
     <color name="pink">#F6D8CE</color>
     <color name="transparent">#00000000</color>
     <color name="grey2">#BDBDBD</color>
+
+
+    <color name="statusBarColor">#FFDEDE</color>
+    <color name="actionButtonBorderColor">#24000000</color>
+    <color name="actionButtonPressedColor">#F6F6F6</color>
+    <color name="theme_chatroom_input_bar_send_button_color">#F58E8E</color>
+    <color name="theme_chatroom_input_bar_send_icon_color">#FFFFFF</color>
 </resources>

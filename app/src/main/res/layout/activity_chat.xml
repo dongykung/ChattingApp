@@ -26,6 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:title="username" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatrecyclerView"
         android:layout_width="0dp"
@@ -61,12 +62,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
     <ImageButton
-        android:id="@+id/sendButton"
+        android:id="@+id/chatsendButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/theme_chatroom_input_bar_send_button_color"
         android:src="@drawable/baseline_send_24"
         android:layout_weight="0.1"/>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
