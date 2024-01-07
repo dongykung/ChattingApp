@@ -3,6 +3,7 @@ package com.example.chattingapp.ChatRoom
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -14,26 +15,30 @@ import com.example.chattingapp.databinding.ItemChatmeBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class ChatAdapter : androidx.recyclerview.widget.ListAdapter<ChatItem, RecyclerView.ViewHolder>(diffUtil) {
+class ChatAdapter(private val recyclerView: RecyclerView) : androidx.recyclerview.widget.ListAdapter<ChatItem, RecyclerView.ViewHolder>(diffUtil) {
     private val VIEW_TYPE_MYMESSAGE = 0
     private val VIEW_TYPE_YOUMESSAGE = 1
-
+     var userprofileurl : String ?=""
     inner class MyMessageViewHolder(private val binding: ItemChatmeBinding) : RecyclerView.ViewHolder(binding.root) {
         // 내가 보낸 메시지에 대한 뷰홀더 처리 로직 구현
         fun bindMyMessage(chatItem: ChatItem,position: Int) {
-            Log.e("chattest",chatItem.message.toString())
             val nowTime = chatItem.time
-            if(sameTimeMessage(currentList[position],currentList[position-1])&&position>0){
-                if(nowTime!=null){
-                    binding.chatmetime.text=convertChatTime(nowTime)
+            val recyclerView = recyclerView
+            if (position > 0 && sameTimeMessage(currentList[position], currentList[position - 1])) {
+                val previousViewHolder =
+                    recyclerView.findViewHolderForAdapterPosition(position - 1) as? MyMessageViewHolder
+                if (nowTime != null) {
+                    binding.chatmetime.text = convertChatTime(nowTime)
                 }
-                binding.chatbubbleme.text=chatItem.message
-            }
+                binding.chatbubbleme.text = chatItem.message
+                previousViewHolder?.binding?.chatmetime?.isVisible=false
+            } else {
 
-            if(nowTime!=null){
-                binding.chatmetime.text = convertChatTime(nowTime)
+                if (nowTime != null) {
+                    binding.chatmetime.text = convertChatTime(nowTime)
+                }
+                binding.chatbubbleme.text = chatItem.message
             }
-            binding.chatbubbleme.text = chatItem.message
         }
     }
 
@@ -42,15 +47,25 @@ class ChatAdapter : androidx.recyclerview.widget.ListAdapter<ChatItem, RecyclerV
         fun bindOtherMessage(chatItem: ChatItem,position: Int) {
             Log.e("chattest2",chatItem.message.toString())
             val nowTime = chatItem.time
-            if(nowTime!=null){
-                binding.chatyoutime.text = convertChatTime(nowTime)
-            }
-            binding.chatuserName.text = chatItem.username
-            binding.chatbubbleyou.text = chatItem.message
-            binding.chatuserImageView.load(chatItem.userprofileurl) {
-                placeholder(R.drawable.customcircle)
-                crossfade(true)
-                transformations(RoundedCornersTransformation(15.0f))
+            if(position>0&&sameTimeMessage(currentList[position],currentList[position-1])){
+                binding.chatuserImageView.isVisible=false
+                binding.chatuserName.isVisible=false
+                binding.chatbubbleyou.text=chatItem.message
+                if(nowTime!=null) binding.chatyoutime.text=convertChatTime(nowTime)
+                val previousViewHolder =
+                    recyclerView.findViewHolderForAdapterPosition(position - 1) as? OtherMessageViewHolder
+                previousViewHolder?.binding?.chatyoutime?.isVisible=false
+            }else {
+                if (nowTime != null) {
+                    binding.chatyoutime.text = convertChatTime(nowTime)
+                }
+                binding.chatuserName.text = chatItem.username
+                binding.chatbubbleyou.text = chatItem.message
+                binding.chatuserImageView.load(userprofileurl) {
+                    placeholder(R.drawable.customcircle)
+                    crossfade(true)
+                    transformations(RoundedCornersTransformation(15.0f))
+                }
             }
         }
     }
@@ -92,12 +107,14 @@ class ChatAdapter : androidx.recyclerview.widget.ListAdapter<ChatItem, RecyclerV
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is MyMessageViewHolder -> holder.bindMyMessage(getItem(position),position)
+            is MyMessageViewHolder -> {
+                holder.bindMyMessage(getItem(position),position)
+            }
             is OtherMessageViewHolder -> holder.bindOtherMessage(getItem(position),position)
         }
     }
     private fun convertChatTime(date: Long): String {
-        val dateFormat = SimpleDateFormat("a h시m분", Locale.KOREA)
+        val dateFormat = SimpleDateFormat("a h:mm", Locale.KOREA)
         return dateFormat.format(date)
     }
     private fun sameTimeMessage(nowItem:ChatItem,previousItem:ChatItem):Boolean{

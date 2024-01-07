@@ -29,7 +29,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/flow"
+        android:id="@+id/chatyouflow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -62,11 +62,11 @@
         android:id="@+id/chatyoutime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/flow"
+        app:layout_constraintStart_toEndOf="@id/chatyouflow"
         tools:text="daf"
         android:textColor="@color/grey3"
-        app:layout_constraintTop_toTopOf="@id/flow"
-        app:layout_constraintBottom_toBottomOf="@id/flow"
+        app:layout_constraintTop_toTopOf="@id/chatyouflow"
+        app:layout_constraintBottom_toBottomOf="@id/chatyouflow"
         app:layout_constraintVertical_bias="0.9"
         android:layout_marginStart="10dp"
         />

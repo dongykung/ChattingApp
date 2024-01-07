@@ -64,7 +64,7 @@ class UserFragment(private val seeProfilelistener : seeMyProfile,private val cha
     }
 
     private fun loadUserList(){
-        Firebase.database.reference.child(Key.DB_USERS).addListenerForSingleValueEvent(object :
+        Firebase.database.reference.child(Key.DB_USERS).addValueEventListener(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.e("userlist",snapshot.toString())

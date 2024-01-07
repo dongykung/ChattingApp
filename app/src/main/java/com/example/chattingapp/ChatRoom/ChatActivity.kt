@@ -57,13 +57,17 @@ private lateinit var chatAdapter : ChatAdapter
             val heightDiff = rootViewHeight-rect.height()
             isOpen = heightDiff > rootViewHeight * 0.25 // true == 키보드 올라감
         }
-        chatAdapter =ChatAdapter()
         chatRecyclerView=binding.chatrecyclerView
+        chatAdapter =ChatAdapter(chatRecyclerView)
+
+        //intent로 넘어오는 값들
         chatRoomId = intent.getStringExtra(EXTRA_CHAT_ROOM_ID)?:return
         otheruserId = intent.getStringExtra(EXTRA_OTHER_USER_UID)?:return
         chatusername = intent.getStringExtra(EXTRA_OTHER_USER_NAME)?:return
-        Log.e("test",chatusername.toString())
         otherprofileurl = intent.getStringExtra(EXTRA_OTHER_UESR_PROFILEURL)?:return
+        chatAdapter.userprofileurl = otherprofileurl
+
+        //툴바 타이틀에 친구이름 넣기
         toolbar.title=chatusername
 //        Firebase.database.reference.child(Key.DB_USERS).child(myuserUid).get()
 //            .addOnSuccessListener {
@@ -77,17 +81,16 @@ private lateinit var chatAdapter : ChatAdapter
 //
 //                chatadapter.otherUserItem = otheruserItem
 //            }
-
+        //채팅 내용 가져오기리스너
         Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).addChildEventListener(object:ChildEventListener{
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                val chatItem = snapshot.getValue(ChatItem::class.java)
                 chatItem?:return
                 chatItemList.add(chatItem)
-                Log.e("챗액티비티",chatItem.message.toString())
                 chatAdapter.submitList(chatItemList)
                 if(isOpen){
-                    Log.e("이즈오픈 발동","키보드올라옴")
-                    chatAdapter.notifyDataSetChanged()
+                    Log.e("키보드가 올라와 있다면 발동","키보드올라옴")
+                    chatAdapter.notifyItemInserted(chatItemList.size - 1)
                 }
                 //chatAdapter.notifyDataSetChanged()
                 scrollBottom()
@@ -98,7 +101,11 @@ private lateinit var chatAdapter : ChatAdapter
             override fun onCancelled(error: DatabaseError) {}
 
         })
+
+        //리사이클러뷰 초기화
          initRecyclerView()
+        //상대방의 프사가 바뀌는지 확인
+
     }
     private fun initRecyclerView(){
         chatRecyclerView.apply {
@@ -124,7 +131,6 @@ private lateinit var chatAdapter : ChatAdapter
             userUid = userInfo.userUid,
             message=message,
             username = userInfo.username,
-            userprofileurl = userInfo.profileurl,
             time = convertMillsSecond()
         )
         Firebase.database.reference.child(Key.DB_CHATS).child(chatRoomId).push().apply {
