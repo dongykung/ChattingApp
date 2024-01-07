@@ -3,6 +3,7 @@ package com.example.chattingapp.ChatRoom
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.chattingapp.Key.Companion.userInfo
 import com.example.chattingapp.R
+import com.example.chattingapp.convertChatTime
 import com.example.chattingapp.databinding.ItemChatBinding
 import com.example.chattingapp.databinding.ItemChatmeBinding
 import java.text.SimpleDateFormat
@@ -55,6 +57,7 @@ class ChatAdapter(private val recyclerView: RecyclerView) : androidx.recyclervie
                 val previousViewHolder =
                     recyclerView.findViewHolderForAdapterPosition(position - 1) as? OtherMessageViewHolder
                 previousViewHolder?.binding?.chatyoutime?.isVisible=false
+
             }else {
                 if (nowTime != null) {
                     binding.chatyoutime.text = convertChatTime(nowTime)
@@ -112,10 +115,6 @@ class ChatAdapter(private val recyclerView: RecyclerView) : androidx.recyclervie
             }
             is OtherMessageViewHolder -> holder.bindOtherMessage(getItem(position),position)
         }
-    }
-    private fun convertChatTime(date: Long): String {
-        val dateFormat = SimpleDateFormat("a h:mm", Locale.KOREA)
-        return dateFormat.format(date)
     }
     private fun sameTimeMessage(nowItem:ChatItem,previousItem:ChatItem):Boolean{
         return (nowItem.userUid==previousItem.userUid&&nowItem.time==previousItem.time)

@@ -16,6 +16,7 @@ import com.example.chattingapp.ChatRoom.ChatItem
 import com.example.chattingapp.Key
 import com.example.chattingapp.Key.Companion.userInfo
 import com.example.chattingapp.R
+import com.example.chattingapp.convertMillsSecond
 import com.example.chattingapp.databinding.BottomsheetFriendprofileviewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -36,7 +37,6 @@ class FriendProfilebottomsheet(private val friendinfo:UserItem):BottomSheetDialo
             val myuserUid = userInfo.userUid ?:""
             val otheruserUid = friendinfo.userUid ?:""
             val chatRoomDb = Firebase.database.reference.child(Key.DB_CHAT_ROOMS).child(myuserUid).child(otheruserUid)
-            val chatotheruserRoomDB=Firebase.database.reference.child(Key.DB_CHAT_ROOMS).child(otheruserUid).child(myuserUid)
             chatRoomDb.get().addOnSuccessListener {
                 Log.e("test",it.toString())
                 var chatRoomId = ""
@@ -48,16 +48,10 @@ class FriendProfilebottomsheet(private val friendinfo:UserItem):BottomSheetDialo
                     val newChatRoom = ChatRoomItem(
                         chatRoomId = chatRoomId,
                         lastMessage = "",
+                        lastMessageTime= convertMillsSecond(),
                         otheruserUid = otheruserUid,
                         otheruserName = friendinfo.username ?: "",
                         otheruserprofileurl = friendinfo.profileurl ?:""
-                    )
-                    val otheruserChatRoom = ChatRoomItem(
-                        chatRoomId = chatRoomId,
-                        lastMessage = "",
-                        otheruserUid = myuserUid,
-                        otheruserprofileurl = userInfo.profileurl,
-                        otheruserName = userInfo.username
                     )
                     chatRoomDb.setValue(newChatRoom)
                 }

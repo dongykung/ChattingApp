@@ -17,6 +17,7 @@ import com.example.chattingapp.Key.Companion.DB_CHAT_ROOMS
 import com.example.chattingapp.Key.Companion.userInfo
 import com.example.chattingapp.R
 import com.example.chattingapp.UserList.UserItem
+import com.example.chattingapp.convertMillsSecond
 import com.example.chattingapp.databinding.ActivityChatBinding
 import com.example.chattingapp.isScrollable
 import com.example.chattingapp.setStackFromEnd
@@ -139,6 +140,7 @@ private lateinit var chatAdapter : ChatAdapter
         }
         val myInfoUpdate = mutableMapOf<String,Any>()
         myInfoUpdate["lastMessage"]=message
+        myInfoUpdate["lastMessageTime"] = convertMillsSecond()
         Firebase.database.reference.child(Key.DB_CHAT_ROOMS).child(myuserUid).child(otheruserId).updateChildren(myInfoUpdate)
         val chatotheruserRoomDB=Firebase.database.reference.child(Key.DB_CHAT_ROOMS).child(otheruserId).child(myuserUid)
         chatotheruserRoomDB.get().addOnSuccessListener {
@@ -146,6 +148,7 @@ private lateinit var chatAdapter : ChatAdapter
                 val otheruserChatRoom = ChatRoomItem(
                     chatRoomId = chatRoomId,
                     lastMessage = message,
+                    lastMessageTime= convertMillsSecond(),
                     otheruserUid = myuserUid,
                     otheruserprofileurl = userInfo.profileurl,
                     otheruserName = userInfo.username
@@ -154,6 +157,7 @@ private lateinit var chatAdapter : ChatAdapter
             }else{
                 val userInfoUpdate = mutableMapOf<String, Any>()
                 userInfoUpdate["lastMessage"] = message
+                userInfoUpdate["lastMessageTime"]= convertMillsSecond()
                 chatotheruserRoomDB.updateChildren(userInfoUpdate)
             }
         }
@@ -167,21 +171,7 @@ private lateinit var chatAdapter : ChatAdapter
             chatRecyclerView.smoothScrollToPosition(lastItemPosition)
         }
     }
-    private fun convertMillsSecond():Long{
-        val currentTimeMillis = System.currentTimeMillis()
 
-        // 현재 시간의 밀리초를 "yyyy년MM월dd일HH시mm분" 형태로 포맷팅합니다.
-        val dateFormat = SimpleDateFormat("yyyy년MM월dd일HH시mm분")
-        val formattedTime = dateFormat.format(currentTimeMillis)
-
-        // 포맷팅된 문자열을 다시 밀리초로 파싱합니다.
-        val parsedDate = dateFormat.parse(formattedTime)
-
-        // 다시 밀리초로 변환합니다.
-        val parsedTimeMillis = parsedDate?.time ?: 0L
-        return parsedTimeMillis
-
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
