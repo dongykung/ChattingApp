@@ -66,7 +66,7 @@ private lateinit var chatAdapter : ChatAdapter
         otheruserId = intent.getStringExtra(EXTRA_OTHER_USER_UID)?:return
         chatusername = intent.getStringExtra(EXTRA_OTHER_USER_NAME)?:return
         otherprofileurl = intent.getStringExtra(EXTRA_OTHER_UESR_PROFILEURL)?:return
-        chatAdapter.userprofileurl = otherprofileurl
+
 
         //툴바 타이틀에 친구이름 넣기
         toolbar.title=chatusername
@@ -87,6 +87,7 @@ private lateinit var chatAdapter : ChatAdapter
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                val chatItem = snapshot.getValue(ChatItem::class.java)
                 chatItem?:return
+
                 chatItemList.add(chatItem)
                 chatAdapter.submitList(chatItemList)
                 if(isOpen){

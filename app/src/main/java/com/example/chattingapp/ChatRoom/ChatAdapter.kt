@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import com.example.chattingapp.Key
 import com.example.chattingapp.Key.Companion.userInfo
 import com.example.chattingapp.R
 import com.example.chattingapp.convertChatTime
@@ -20,7 +21,6 @@ import java.util.Locale
 class ChatAdapter(private val recyclerView: RecyclerView) : androidx.recyclerview.widget.ListAdapter<ChatItem, RecyclerView.ViewHolder>(diffUtil) {
     private val VIEW_TYPE_MYMESSAGE = 0
     private val VIEW_TYPE_YOUMESSAGE = 1
-     var userprofileurl : String ?=""
     inner class MyMessageViewHolder(private val binding: ItemChatmeBinding) : RecyclerView.ViewHolder(binding.root) {
         // 내가 보낸 메시지에 대한 뷰홀더 처리 로직 구현
         fun bindMyMessage(chatItem: ChatItem,position: Int) {
@@ -64,7 +64,9 @@ class ChatAdapter(private val recyclerView: RecyclerView) : androidx.recyclervie
                 }
                 binding.chatuserName.text = chatItem.username
                 binding.chatbubbleyou.text = chatItem.message
-                binding.chatuserImageView.load(userprofileurl) {
+                val imageurl = Key.friendInfo.find { chatItem.userUid==it.userUid }
+                Log.e("chattest",Key.friendInfo.toString())
+                binding.chatuserImageView.load(imageurl?.profileurl) {
                     placeholder(R.drawable.customcircle)
                     crossfade(true)
                     transformations(RoundedCornersTransformation(15.0f))

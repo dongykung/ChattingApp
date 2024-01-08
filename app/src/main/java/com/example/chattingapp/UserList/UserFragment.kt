@@ -75,6 +75,13 @@ class UserFragment(private val seeProfilelistener : seeMyProfile,private val cha
                    user?:return
                     if(user.userUid!=userInfo.userUid){
                         userItemList.add(user)
+                        val existingItem = Key.friendInfo.find { it.userUid == user.userUid }
+                        if(existingItem!=null){
+                            Key.friendInfo.remove(existingItem)
+                            Key.friendInfo.add(user)
+                        }else{
+                            Key.friendInfo.add(user)
+                        }
                     }
                 }
                 userlistAdapter.submitList(userItemList)

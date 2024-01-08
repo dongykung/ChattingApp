@@ -58,6 +58,7 @@ class ChatListFragment:Fragment() {
                 val chatRoomList = snapshot.children.map {
                     it.getValue(ChatRoomItem::class.java)
                 }
+                chatRoomList.sortedByDescending{ it?.lastMessageTime }
                 chatlistAdapter.submitList(chatRoomList)
             }
 

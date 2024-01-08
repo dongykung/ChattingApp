@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import com.example.chattingapp.Key
 import com.example.chattingapp.R
 import com.example.chattingapp.convertChatTime
 import com.example.chattingapp.databinding.ItemChatlistBinding
@@ -33,7 +34,8 @@ class ChatListAdatper(private val onclick : (ChatRoomItem) -> Unit):ListAdapter<
             }
             binding.friendName.text=item.otheruserName
             binding.chatroomLastmessage.text=item.lastMessage
-            binding.chatroomProfileImageView.load(item.otheruserprofileurl){
+            val userinfo = Key.friendInfo.find { item.otheruserUid==it.userUid }
+            binding.chatroomProfileImageView.load(userinfo?.profileurl){
                 placeholder(R.drawable.customcircle)
                 crossfade(true)
                 transformations(RoundedCornersTransformation(5.0f))

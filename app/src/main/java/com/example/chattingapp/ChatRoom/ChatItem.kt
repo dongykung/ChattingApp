@@ -5,5 +5,5 @@ data class ChatItem(
     var userUid:String?=null,
     var message:String?=null,
     var username:String?=null,
-    var time:Long?=null
+    var time:Long?=null,
 )
